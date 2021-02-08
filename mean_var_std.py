@@ -6,49 +6,33 @@ def calculate(list):
     if len(list) != 9:
         raise ValueError("List must contain nine numbers.")
 
-    nums = np.array(list)
-    nums = np.reshape(nums, (1,3,3))
+    nums = np.reshape(list, (3, 3))
 
+    mean_list = []
+    var_list = []
+    std_list = []
+    max_list = []
+    min_list = []
+    sum_list = []
 
+    calculations = {
+        "mean": mean_list,
+        "variance": var_list,
+        "standard deviation": std_list,
+        "max": max_list,
+        "min": min_list,
+        "sum": sum_list,
+    }
 
-    class DictVal:
+    calc = ("mean", "var", "std", "max", "min", "sum")
 
-        calculations = {
-        "mean": [],
-        "variance": [],
-        "standard deviation": [],
-        "max": [],
-        "min": [],
-        "sum": [],
-        }
-
-        def __init__(self, axis):
-            
-
-    mean = DictVal()
-
-
-
-
-
-
-
-
-
-
-
-
-    for i in (2, 1):
-        calculations['mean'] = np.mean(nums, axis=i)
-        calculations['variance'] = np.var(nums, axis=i)
-        calculations['standard deviation'] = np.std(nums, axis=i)
-        calculations['max'] = np.max(nums, axis=i)
-        calculations['min'] = np.min(nums, axis=i)
-        calculations['sum'] = np.sum(nums, axis=i)
-        print(calculations)
-
-
-
-
+    for x in calc:
+        add_list = eval(x + "_list")
+        j = eval("np." + x)
+        for y in (0, 1, None):
+            add_list.append(j(nums, axis=y).tolist())
 
     return calculations
+
+print(calculate([9,1,5,3,3,3,2,9,0]))
+print(calculate([2,6,2,8,4,0,1,5,7]))
